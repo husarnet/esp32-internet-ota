@@ -43,10 +43,10 @@ Project template allowing to update the ESP32 firmware over the Internet using G
 
     | Secret | Sample Value | Desription |
     | - | - | - |
-    | `WIFI_SSID` | `FreeWifi` | just your WiFi network name |
-    | `WIFI_PASS` | `hardtoguess` | ... and password |
-    | `HUSARNET_HOSTNAME` | `my-esp32` | hostname under which you want your ESP32 to be available by other peers |
-    | `HUSARNET_JOINCODE` | `fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/xhfqwPxxxetyCExsSPRPn9` | find your own **secret** Join Code at your user account at https://app/husarnet.com > `choosen network` >  `add element` button. Anyone with this Join Code can connect to your Husarnet network |
+    | `WIFI_SSID` | FreeWifi | just your WiFi network name |
+    | `WIFI_PASS` | hardtoguess | ... and password |
+    | `HUSARNET_HOSTNAME` | my-esp32 | hostname under which you want your ESP32 to be available by other peers |
+    | `HUSARNET_JOINCODE` | fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/xhfqwPxxxetyCExsSPRPn9 | find your own **secret** Join Code at your user account at https://app/husarnet.com > `choosen network` >  `add element` button. Anyone with this Join Code can connect to your Husarnet network |
 
 2. Push changes to your repo:
 
