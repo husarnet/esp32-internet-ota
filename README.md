@@ -58,13 +58,13 @@ A boilerplate project for ESP32 allowing in-field firmware update using GitHub A
     git push
     ```
 
-3. In ~3 minutes the GitHub workflow should finish it job. Visit: `http://my-esp32:8080` URL with a sample "Hello world" website hosted by your ESP32.
+3. In ~3 minutes the GitHub workflow should finish its job. Visit: `http://my-esp32:8080` URL with a sample "Hello world" website hosted by your ESP32.
 
 
     Of course your laptop need to be connected to the same Husarnet network - you will find quick start guide showing how to do it here: https://husarnet.com/docs/
 
 
-## Troubleshooting
+## Tips
 
 ### Erasing flash memory of ESP32
 
@@ -87,3 +87,7 @@ A boilerplate project for ESP32 allowing in-field firmware update using GitHub A
 ```bash
 sudo tcpflow -p -c -i hnet0
 ```
+
+### Accesing a webserver hosted by ESP32 using a public domain
+
+Here is a blog post showing how to configure Nginx Proxy Manager to **provide a public access to web servers hosted by Husarnet connected devices** using: https://husarnet.com/blog/reverse-proxy-gui . It can be used also to provide the access to a web server hosted by ESP32 using a nice looking link like: `https://my-awesome-esp32.mydomain.com`.
