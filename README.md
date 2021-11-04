@@ -1,6 +1,6 @@
 # esp32-internet-ota
 
-Project template allowing to update the ESP32 firmware over the Internet using GitHub Actions and Husarnet VPN Client for Arduino.
+Project template allowing to update the ESP32 firmware over the Internet using GitHub Actions and Husarnet peer-to-peer VPN Client.
 
 > **Prerequisites** 
 >
@@ -46,7 +46,7 @@ Project template allowing to update the ESP32 firmware over the Internet using G
     | `WIFI_SSID` | FreeWifi | just your WiFi network name |
     | `WIFI_PASS` | hardtoguess | ... and password |
     | `HUSARNET_HOSTNAME` | my-esp32 | hostname under which you want your ESP32 to be available by other peers |
-    | `HUSARNET_JOINCODE` | fc94:b01d:1803:8dd8:b293:5c7d:7639:932a/xhfqwPxxxetyCExsSPRPn9 | find your own **secret** Join Code at your user account at https://app/husarnet.com > `choosen network` >  `add element` button. Anyone with this Join Code can connect to your Husarnet network |
+    | `HUSARNET_JOINCODE` | fc94:...:7639:932a/xhfqwPxxxetyCExsSPRPn9 | find your own **secret** Join Code at your user account at https://app/husarnet.com > `choosen network` >  `add element` button. Anyone with this Join Code can connect to your Husarnet network |
 
 2. Push changes to your repo:
 
@@ -56,10 +56,10 @@ Project template allowing to update the ESP32 firmware over the Internet using G
     git push
     ```
 
-3. After ~X minutes, after the GitHub workflow does it job, visit: `http://my-esp32:8080` URL.
+3. In ~3 minutes the GitHub workflow shoud finish it job. Visit: `http://my-esp32:8080` URL with a sample "Hello world" website hosted by your ESP32.
 
 
-    Of course your laptop need to be connected to the same Husarnet network - you will find quick start guide here: https://husarnet.com/docs/
+    Of course your laptop need to be connected to the same Husarnet network - you will find quick start guide showing how to do it here: https://husarnet.com/docs/
 
 
 ## Troubleshooting
