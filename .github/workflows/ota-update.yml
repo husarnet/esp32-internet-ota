@@ -1,0 +1,46 @@
+name: ESP32 OTA update
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Connecting the GitHub workflow to Husarnet VPN network
+      uses: husarnet/husarnet-action@v1
+      with:
+        join-code: ${{ secrets.HUSARNET_JOINCODE }}
+
+    - name: ESP32 software reset
+      run: curl -X POST 'http://${{ secrets.HUSARNET_HOSTNAME }}:8080/reset'
+
+    - name: Installing platformio
+      run: pip3 install -U platformio
+
+    - name: Building a firmware for ESP32
+      run: |
+        export SSID=${{ secrets.WIFI_SSID }}
+        export PASS=${{ secrets.WIFI_PASS }}
+        export JOINCODE=${{ secrets.HUSARNET_JOINCODE }}
+        export HOSTNAME=${{ secrets.HUSARNET_HOSTNAME }}
+        pio run
+
+    - name: Uploading a firmware to ESP32
+      run: >
+        curl --http0.9 -# -v
+        -H 'Accept: */*'
+        -H 'Accept-Encoding: gzip, deflate'
+        -H 'Connection: keep-alive'
+        -F "MD5="$(md5sum "${{ github.workspace }}/.pio/build/esp32dev/firmware.bin" | cut -d ' ' -f 1)""
+        -F 'firmware=@${{ github.workspace }}/.pio/build/esp32dev/firmware.bin'
+        'http://${{ secrets.HUSARNET_HOSTNAME }}:8080/update'
+
+    - name: Stop Husarnet
+      run: sudo systemctl stop husarnet
