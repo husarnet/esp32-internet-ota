@@ -90,4 +90,6 @@ sudo tcpflow -p -c -i hnet0
 
 ### Accesing a webserver hosted by ESP32 using a public domain
 
-Here is a blog post showing how to configure Nginx Proxy Manager to **provide a public access to web servers hosted by Husarnet connected devices** using: https://husarnet.com/blog/reverse-proxy-gui . It can be used also to provide the access to a web server hosted by ESP32 using a nice looking link like: `https://my-awesome-esp32.mydomain.com`.
+Here is a blog post showing how to configure Nginx Proxy Manager to **provide a public access to web servers hosted by Husarnet connected devices**: https://husarnet.com/blog/reverse-proxy-gui
+
+It can be also used  o provide the access to a web server hosted by ESP32 using a nice looking link like: `https://my-awesome-esp32.mydomain.com`.
