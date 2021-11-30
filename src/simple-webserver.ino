@@ -38,11 +38,9 @@ void setup(void) {
   // Wi-Fi, OTA and Husarnet VPN configuration
   // ===============================================
 
-  Serial.begin(115200, SERIAL_8N1, 16,
-               17);  // remap default Serial (used by Husarnet logs) from P3 &
-                     // P1 to P16 & P17
-  Serial1.begin(115200, SERIAL_8N1, 3,
-                1);  // remap Serial1 from P9 & P10 to P3 & P1
+  // remap default Serial (used by Husarnet logs) 
+  Serial.begin(115200, SERIAL_8N1, 16, 17);  // from P3 & P1 to P16 & P17
+  Serial1.begin(115200, SERIAL_8N1, 3, 1);  // remap Serial1 from P9 & P10 to P3 & P1
 
   Serial1.println("\r\n**************************************");
   Serial1.println("GitHub Actions OTA example");
@@ -72,11 +70,11 @@ void setup(void) {
   Husarnet.join(husarnetJoinCode, hostName);
   Husarnet.start();
 
-  // Before Husarnet is ready peer list contains: master (0000:0000:0000:0000:0000:0000:0000:0001)
+  // Before Husarnet is ready peer list contains: 
+  // master (0000:0000:0000:0000:0000:0000:0000:0001)
   const uint8_t addr_comp[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
   bool husarnetReady = 0;
   while (husarnetReady == 0) {
-    delay(1000);
     Serial1.print(".");
     for (auto const &host : Husarnet.listPeers()) {
       if (host.first == addr_comp) {
@@ -85,6 +83,7 @@ void setup(void) {
         husarnetReady = 1;
       }
     }
+    delay(1000);
   }
 
   Serial1.println(" done\r\n");
@@ -115,8 +114,7 @@ void setup(void) {
 
   Serial1.printf("Known hosts:\r\n");
   for (auto const &host : Husarnet.listPeers()) {
-    Serial1.printf("%s (%s)\r\n", host.second.c_str(),
-                   host.first.toString().c_str());
+    Serial1.printf("%s (%s)\r\n", host.second.c_str(), host.first.toString().c_str());
   }
 }
 
