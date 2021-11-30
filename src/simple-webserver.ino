@@ -1,15 +1,16 @@
-#include <WiFi.h>
+#include <AsyncElegantOTA.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
-#include <AsyncElegantOTA.h>
 #include <Husarnet.h>
+#include <WiFi.h>
 
 #define HTTP_PORT 8080
 
 #if __has_include("credentials.h")
 
-// For local development (rename credenials-template.h and type your WiFi and Husarnet credentials there)
-#include "credentials.h"  
+// For local development (rename credenials-template.h and type your WiFi and
+// Husarnet credentials there)
+#include "credentials.h"
 
 #else
 
@@ -21,29 +22,31 @@ const char *password = WIFI_PASS;
 
 // Husarnet credentials
 const char *hostName = HUSARNET_HOSTNAME;
-const char *husarnetJoinCode = HUSARNET_JOINCODE; // find at app.husarnet.com
+const char *husarnetJoinCode = HUSARNET_JOINCODE;  // find at app.husarnet.com
 const char *dashboardURL = "default";
 
 #endif
 
 AsyncWebServer server(HTTP_PORT);
 
-void setup(void)
-{
+void setup(void) {
   // ===============================================
   // Wi-Fi, OTA and Husarnet VPN configuration
   // ===============================================
 
-  Serial.begin(115200,SERIAL_8N1, 16, 17); // remap default Serial (used by Husarnet logs) from P3 & P1 to P16 & P17
-  Serial1.begin(115200,SERIAL_8N1, 3, 1); // remap Serial1 from P9 & P10 to P3 & P1
+  Serial.begin(115200, SERIAL_8N1, 16,
+               17);  // remap default Serial (used by Husarnet logs) from P3 &
+                     // P1 to P16 & P17
+  Serial1.begin(115200, SERIAL_8N1, 3,
+                1);  // remap Serial1 from P9 & P10 to P3 & P1
 
   Serial1.println("\r\n**************************************");
   Serial1.println("GitHub Actions OTA example");
   Serial1.println("**************************************\r\n");
 
-  // Init Wi-Fi 
+  // Init Wi-Fi
   Serial1.printf("📻 1. Connecting to: %s Wi-Fi network ", ssid);
-  
+
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
@@ -51,21 +54,36 @@ void setup(void)
     delay(500);
     Serial1.print(".");
     cnt++;
-    if(cnt > 10) {
+    if (cnt > 10) {
       ESP.restart();
     }
   }
-  
+
   Serial1.println(" done\r\n");
 
   // Init Husarnet P2P VPN service
+  Serial1.printf("⌛ 2. Waiting for Husarnet to be ready ");
+
   Husarnet.selfHostedSetup(dashboardURL);
   Husarnet.join(husarnetJoinCode, hostName);
   Husarnet.start();
 
-  Serial1.printf("⌛ 2. Waiting for Husarnet to be ready ... ");
-  delay(15000); // TODO: check connection status instead
-  Serial1.println("done\r\n");
+  // Before Husarnet is ready peer list contains: master (0000:0000:0000:0000:0000:0000:0000:0001)
+  const uint8_t addr_comp[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
+  bool husarnetReady = 0;
+  while (husarnetReady == 0) {
+    delay(1000);
+    Serial1.print(".");
+    for (auto const &host : Husarnet.listPeers()) {
+      if (host.first == addr_comp) {
+        ;
+      } else {
+        husarnetReady = 1;
+      }
+    }
+  }
+
+  Serial1.println(" done\r\n");
 
   // define HTTP API for remote reset
   server.on("/reset", HTTP_POST, [](AsyncWebServerRequest *request) {
@@ -78,7 +96,7 @@ void setup(void)
   // Init OTA webserver (available under /update path)
   AsyncElegantOTA.begin(&server);
   server.begin();
-  
+
   // ===============================================
   // PLACE YOUR APPLICATION CODE BELOW
   // ===============================================
@@ -93,11 +111,9 @@ void setup(void)
 
   Serial1.printf("Known hosts:\r\n");
   for (auto const &host : Husarnet.listPeers()) {
-    Serial1.printf("%s (%s)\r\n", host.second.c_str(), host.first.toString().c_str());
+    Serial1.printf("%s (%s)\r\n", host.second.c_str(),
+                   host.first.toString().c_str());
   }
 }
 
-void loop(void)
-{
-  ;
-}
+void loop(void) { ; }
