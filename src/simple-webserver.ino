@@ -29,6 +29,10 @@ const char *dashboardURL = "default";
 
 AsyncWebServer server(HTTP_PORT);
 
+// index.html available in "index_html" const String
+extern const char index_html_start[] asm("_binary_src_index_html_start");
+const String index_html = String((const char*)index_html_start);
+
 void setup(void) {
   // ===============================================
   // Wi-Fi, OTA and Husarnet VPN configuration
@@ -103,7 +107,7 @@ void setup(void) {
 
   // Example webserver hosting table with known Husarnet Hosts
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
-    request->send(200, "text/plain", "Hello world!!!");
+    request->send(200, "text/html", index_html);
   });
 
   Serial1.println("🚀 HTTP server started\r\n");
