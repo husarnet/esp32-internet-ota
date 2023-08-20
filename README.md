@@ -20,60 +20,73 @@ A boilerplate project for ESP32 allowing in-field firmware update using GitHub A
 
 1. Click **[Use this template](https://github.com/husarnet/esp32-internet-ota/generate)** button to create your own copy of this repo. Clone the repo, and open it:
 
-```bash
-git clone https://github.com/husarnet/esp32-internet-ota
-cd esp32-internet-ota
-```
+    ```bash
+    git clone https://github.com/husarnet/esp32-internet-ota
+    cd esp32-internet-ota
+    ```
 
 2. Erase the ESP32 flash
 
-```bash
-pio run --target erase
-# or 
-# esptool.py erase_flash
-```
+    ```bash
+    pio run --target erase
+    # or 
+    # esptool.py erase_flash
+    ```
+
+3. Prepare the `.env` file:
+
+    ```bash
+    cp .env.template .env
+    ```
+
+    And edit its content:
+
+    ```bash
+    WIFI_SSID="<place-your-wifi-ssid-here>"
+    WIFI_PASS="<place-a-password-to-your-wifi-here>"
+    HUSARNET_JOINCODE="<place-your-husarnet-joincode-here"
+    ```
 
 3. The first time you need to upload the firmware over the USB cable:
 
-```bash
-export WIFI_SSID="<place-your-wifi-ssid-here>"
-export WIFI_PASS="<place-a-password-to-your-wifi-here>"
-export HUSARNET_JOINCODE="<place-your-husarnet-joincode-here"
-pio run -e serial_upload --target upload
-```
+    ```bash
+    source .env
+    pio run -e serial_upload --target upload
+    ```
 
 4. Open the Platformio Device Monitor:
 
-```bash
-platformio device monitor
-```
+    ```bash
+    pio device monitor
+    ```
 
-If you will open a serial monitor you will see the similar output (the first time you may wait up to 2 minutes):
+    If you will open a serial monitor you will see the similar output (the first time you may wait up to 2 minutes):
 
-```bash
-**************************************
-GitHub Actions OTA example
-**************************************
+    ```bash
+    **************************************
+    GitHub Actions OTA example
+    **************************************
 
-📻 1. Connecting to: FreeWifi Wi-Fi network .. done
+    📻 1. Connecting to: FreeWifi Wi-Fi network .. done
 
-⌛ 2. Waiting for Husarnet to be ready ... done
+    ⌛ 2. Waiting for Husarnet to be ready ... done
 
-🚀 HTTP server started
+    🚀 HTTP server started
 
-Visit:
-http://my-esp32:8080/
+    Visit:
+    http://my-esp32:8080/
 
-Known hosts:
-my-laptop (fc94:a4c1:1f22:ab3b:b04a:1a3b:ba15:84bc)
-my-esp32 (fc94:f632:c8d9:d2a6:ad18:ed16:ed7e:9f3f)
-```
+    Known hosts:
+    my-laptop (fc94:a4c1:1f22:ab3b:b04a:1a3b:ba15:84bc)
+    my-esp32 (fc94:f632:c8d9:d2a6:ad18:ed16:ed7e:9f3f)
+    ```
 
 4. Visit http://my-esp32:8080/ from your laptop (that should be in the same Husarnet group) and if the website is avaialble you can test OTA upgrade from the level of your laptop:
 
-```bash
-pio run -e ota_upload --target upload
-```
+    ```bash
+    source .env
+    pio run -e ota_upload --target upload
+    ```
 
 5. If it works you can configure your GitHub repository.
 
