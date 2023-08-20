@@ -21,13 +21,13 @@ const char *ssid = WIFI_SSID;
 const char *password = WIFI_PASS;
 
 // Husarnet credentials
-const char *hostName = HUSARNET_HOSTNAME;
 const char *husarnetJoinCode = HUSARNET_JOINCODE;  // find at app.husarnet.com
 const char *dashboardURL = "default";
 
 #endif
 
 AsyncWebServer server(HTTP_PORT);
+const char *hostName = "my-esp32";
 
 // index.html available in "index_html" const String
 extern const char index_html_start[] asm("_binary_src_index_html_start");
