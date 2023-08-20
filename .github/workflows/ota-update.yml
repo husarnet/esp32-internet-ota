@@ -18,10 +18,12 @@ jobs:
       uses: husarnet/husarnet-action@v4
       with:
         join-code: ${{ secrets.HUSARNET_JOINCODE }}
-        hostname: my-hostname
         remove-host: yes
         dashboard-login: ${{ secrets.HUSARNET_DASHBOARD_LOGIN }}
         dashboard-password: ${{ secrets.HUSARNET_DASHBOARD_PASSWORD }}
+
+    - name: Wait until my-esp32 host is available
+      run: while ! grep -q "my-esp32" /etc/hosts; do sleep 1; done
 
     - name: ESP32 software reset
       run: curl -X POST 'http://my-esp32:8080/reset'
