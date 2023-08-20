@@ -18,7 +18,6 @@ jobs:
       uses: husarnet/husarnet-action@v4
       with:
         join-code: ${{ secrets.HUSARNET_JOINCODE }}
-        remove-host: yes
         dashboard-login: ${{ secrets.HUSARNET_DASHBOARD_LOGIN }}
         dashboard-password: ${{ secrets.HUSARNET_DASHBOARD_PASSWORD }}
 
