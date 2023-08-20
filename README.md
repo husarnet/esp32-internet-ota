@@ -22,7 +22,7 @@ A boilerplate project for ESP32 allowing in-field firmware update using GitHub A
 
     ```bash
     git clone https://github.com/husarnet/esp32-internet-ota
-    cd esp32-internet-ota
+    cd esp32-internet-ota/
     ```
 
 2. Erase the ESP32 flash
@@ -90,7 +90,21 @@ A boilerplate project for ESP32 allowing in-field firmware update using GitHub A
 
 5. If it works you can configure your GitHub repository.
 
+### Editing in Visual Studio Code with a PlatformIO extenstion
+
+Source environment variables from `.env` file before opening VS Code.
+
+```bash
+cd esp32-internet-ota/
+source .env
+code .
+```
+
 ### Internet OTA with GitHub Actions
+
+> **warning!**
+>
+> Before launching an Internet OTA, you need to upload the [initial firmware](#first-setup) at first to make your board accessible over the Husarnet VPN.
 
 1. Create the folowing GitHub repository secrets (`Settings` > `Secrets` > `New repository secret`):
 
