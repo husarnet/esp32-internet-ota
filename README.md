@@ -18,9 +18,22 @@ A boilerplate project for ESP32 allowing in-field firmware update using GitHub A
 
 ### First setup
 
-1. Click **[Use this template](https://github.com/husarnet/esp32-internet-ota/generate)** button to create your own copy of this repo.
+1. Click **[Use this template](https://github.com/husarnet/esp32-internet-ota/generate)** button to create your own copy of this repo. Clone the repo, and open it:
 
-2. The first time you need to upload the firmware over the USB cable:
+```bash
+git clone https://github.com/husarnet/esp32-internet-ota
+cd esp32-internet-ota
+```
+
+2. Erase the ESP32 flash
+
+```bash
+pio run --target erase
+# or 
+# esptool.py erase_flash
+```
+
+3. The first time you need to upload the firmware over the USB cable:
 
 ```bash
 export WIFI_SSID="<place-your-wifi-ssid-here>"
@@ -29,7 +42,13 @@ export HUSARNET_JOINCODE="<place-your-husarnet-joincode-here"
 pio run -e serial_upload --target upload
 ```
 
-If you will open a serial monitor you will see the similar output:
+4. Open the Platformio Device Monitor:
+
+```bash
+platformio device monitor
+```
+
+If you will open a serial monitor you will see the similar output (the first time you may wait up to 2 minutes):
 
 ```bash
 **************************************
@@ -50,13 +69,13 @@ my-laptop (fc94:a4c1:1f22:ab3b:b04a:1a3b:ba15:84bc)
 my-esp32 (fc94:f632:c8d9:d2a6:ad18:ed16:ed7e:9f3f)
 ```
 
-3. Visit http://my-esp32:8080/ from your laptop (that should be in the same Husarnet group) and if the website is avaialble you can test OTA upgrade from the level of your laptop:
+4. Visit http://my-esp32:8080/ from your laptop (that should be in the same Husarnet group) and if the website is avaialble you can test OTA upgrade from the level of your laptop:
 
 ```bash
 pio run -e ota_upload --target upload
 ```
 
-4. If it works you can configure your GitHub repository.
+5. If it works you can configure your GitHub repository.
 
 ### Internet OTA with GitHub Actions
 
@@ -85,30 +104,6 @@ pio run -e ota_upload --target upload
 
 
 ## Tips
-
-### Erasing flash memory of ESP32
-
-1. Connect ESP32 to your laptop
-
-2. Install platformio CLI
-
-    ```bash
-    pip install -U platformio
-    ```
-
-3. Make flash erase:
-
-    ```bash
-    pio run --target erase
-    # or 
-    # esptool.py erase_flash
-    ```
-
-4. Upload the firmware:
-
-    ```bash
-    pio run --target upload
-    ```
 
 ### Monitoring network traffic on `hnet0` interface
 

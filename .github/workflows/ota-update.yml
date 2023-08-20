@@ -24,8 +24,8 @@ jobs:
     - name: Wait until my-esp32 host is available
       run: while ! grep -q "my-esp32" /etc/hosts; do sleep 1; done
 
-    # - name: ESP32 software reset
-    #   run: curl -X POST 'http://my-esp32:8080/reset'
+    - name: ESP32 software reset
+      run: curl -X POST 'http://my-esp32:8080/reset'
 
     - name: Installing platformio
       run: pip3 install -U platformio
