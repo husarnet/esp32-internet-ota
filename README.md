@@ -124,6 +124,8 @@ code .
     git push
     ```
 
+    And trigger the workflow manually (`workflow_dispatch`) in your GitHub repository.
+
 3. In ~3 minutes the GitHub workflow should finish its job. Visit: `http://my-esp32:8080` URL with a sample "Hello world" website hosted by your ESP32.
 
 
