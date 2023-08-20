@@ -40,6 +40,10 @@ jobs:
     - name: Uploading a firmware to ESP32
       run: >
         curl --http0.9 -# -v
+        --connect-timeout 30 
+        --retry 5  
+        --retry-delay 5 
+        --retry-connrefused  
         -H 'Accept: */*'
         -H 'Accept-Encoding: gzip, deflate'
         -H 'Connection: keep-alive'
