@@ -82,6 +82,12 @@ A boilerplate project for ESP32 allowing in-field firmware update using GitHub A
     pio run --target erase
     ```
 
+4. Upload the firmware:
+
+    ```bash
+    pio run -t upload
+    ```
+
 ### Monitoring network traffic on `hnet0` interface
 
 ```bash
