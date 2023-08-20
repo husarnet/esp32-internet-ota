@@ -30,26 +30,24 @@ jobs:
     - name: Installing platformio
       run: pip3 install -U platformio
 
-    - name: Building a firmware for ESP32
+    - name: Building and uploading a firmware for ESP32
       run: |
         export SSID=${{ secrets.WIFI_SSID }}
         export PASS=${{ secrets.WIFI_PASS }}
         export JOINCODE=${{ secrets.HUSARNET_JOINCODE }}
-        pio run
+        pio run --target upload
 
-    - name: Uploading a firmware to ESP32
-      run: pio run -t upload
-      
-      # run: >
-      #   curl --http0.9 -# -v
-      #   --connect-timeout 30 
-      #   --retry 5  
-      #   --retry-delay 5 
-      #   --retry-connrefused  
-      #   -H 'Accept: */*'
-      #   -H 'Accept-Encoding: gzip, deflate'
-      #   -H 'Connection: keep-alive'
-      #   -F "MD5="$(md5sum "${{ github.workspace }}/.pio/build/esp32dev/firmware.bin" | cut -d ' ' -f 1)""
-      #   -F 'firmware=@${{ github.workspace }}/.pio/build/esp32dev/firmware.bin'
-      #   'http://my-esp32:8080/update'
+    # - name: Uploading a firmware to ESP32
+    #   run: >
+    #     curl --http0.9 -# -v
+    #     --connect-timeout 30 
+    #     --retry 5  
+    #     --retry-delay 5 
+    #     --retry-connrefused  
+    #     -H 'Accept: */*'
+    #     -H 'Accept-Encoding: gzip, deflate'
+    #     -H 'Connection: keep-alive'
+    #     -F "MD5="$(md5sum "${{ github.workspace }}/.pio/build/esp32dev/firmware.bin" | cut -d ' ' -f 1)""
+    #     -F 'firmware=@${{ github.workspace }}/.pio/build/esp32dev/firmware.bin'
+    #     'http://my-esp32:8080/update'
 

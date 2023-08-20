@@ -85,7 +85,7 @@ A boilerplate project for ESP32 allowing in-field firmware update using GitHub A
 4. Upload the firmware:
 
     ```bash
-    pio run -t upload
+    pio run --target upload
     ```
 
 ### Monitoring network traffic on `hnet0` interface
