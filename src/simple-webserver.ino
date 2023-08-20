@@ -92,7 +92,7 @@ void setup(void) {
   server.on("/reset", HTTP_POST, [](AsyncWebServerRequest *request) {
     request->send(200, "text/plain", "Reseting ESP32 after 1s ...");
     Serial1.println("Software reset on POST request");
-    delay(1000);
+    delay(2000);
     ESP.restart();
   });
 
