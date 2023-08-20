@@ -6,14 +6,6 @@
 
 #define HTTP_PORT 8080
 
-#if __has_include("credentials.h")
-
-// For local development (rename credenials-template.h and type your WiFi and
-// Husarnet credentials there)
-#include "credentials.h"
-
-#else
-
 // For GitHub Actions OTA deploment
 
 // WiFi credentials
@@ -23,8 +15,6 @@ const char *password = WIFI_PASS;
 // Husarnet credentials
 const char *husarnetJoinCode = HUSARNET_JOINCODE;  // find at app.husarnet.com
 const char *dashboardURL = "default";
-
-#endif
 
 AsyncWebServer server(HTTP_PORT);
 const char *hostName = "my-esp32";

@@ -6,7 +6,13 @@ A boilerplate project for ESP32 allowing in-field firmware update using GitHub A
 
 > **Prerequisites** 
 >
-> Install [Visual Studio Code](https://code.visualstudio.com/) with [PlatformIO extension](https://platformio.org/install/ide?install=vscode).
+> Install platformio CLI:
+>
+> ```bash
+> pip3 install -U platformio
+> ```
+>
+> If you are working in [Visual Studio Code](https://code.visualstudio.com/) the [PlatformIO extension](https://platformio.org/install/ide?install=vscode) will be helpful.
 
 ## Quick start
 
@@ -14,30 +20,43 @@ A boilerplate project for ESP32 allowing in-field firmware update using GitHub A
 
 1. Click **[Use this template](https://github.com/husarnet/esp32-internet-ota/generate)** button to create your own copy of this repo.
 
-2. Clone the repo you have just created and open it in Visual Studio Code. Platformio should automatically install all project dependencies.
+2. The first time you need to upload the firmware over the USB cable:
 
-3. Rename `credentials-template.h` to `credentials.h` and type your WiFi an Husarnet credentials there (you will find you Husarnet Join Code at https://app.husarnet.com).
+```bash
+export WIFI_SSID="<place-your-wifi-ssid-here>"
+export WIFI_PASS="<place-a-password-to-your-wifi-here>"
+export HUSARNET_JOINCODE="<place-your-husarnet-joincode-here"
+pio run -e serial_upload --target upload
+```
 
-4. Click "PlatformIO: upload" button to flash your ESP32 board connected to your laptop. You will find the following log in the serial monitor:
+If you will open a serial monitor you will see the similar output:
 
-    ```bash
-    **************************************
-    GitHub Actions OTA example
-    **************************************
-    
-    📻 1. Connecting to: FreeWifi Wi-Fi network .. done
+```bash
+**************************************
+GitHub Actions OTA example
+**************************************
 
-    ⌛ 2. Waiting for Husarnet to be ready ... done
+📻 1. Connecting to: FreeWifi Wi-Fi network .. done
 
-    🚀 HTTP server started
+⌛ 2. Waiting for Husarnet to be ready ... done
 
-    Visit:
-    http://my-esp32:8080/
+🚀 HTTP server started
 
-    Known hosts:
-    my-laptop (fc94:a4c1:1f22:ab3b:b04a:1a3b:ba15:84bc)
-    my-esp32 (fc94:f632:c8d9:d2a6:ad18:ed16:ed7e:9f3f)
-    ```
+Visit:
+http://my-esp32:8080/
+
+Known hosts:
+my-laptop (fc94:a4c1:1f22:ab3b:b04a:1a3b:ba15:84bc)
+my-esp32 (fc94:f632:c8d9:d2a6:ad18:ed16:ed7e:9f3f)
+```
+
+3. Visit http://my-esp32:8080/ from your laptop (that should be in the same Husarnet group) and if the website is avaialble you can test OTA upgrade from the level of your laptop:
+
+```bash
+pio run -e ota_upload --target upload
+```
+
+4. If it works you can configure your GitHub repository.
 
 ### Internet OTA with GitHub Actions
 
@@ -47,8 +66,9 @@ A boilerplate project for ESP32 allowing in-field firmware update using GitHub A
     | - | - | - |
     | `WIFI_SSID` | FreeWifi | just your WiFi network name |
     | `WIFI_PASS` | hardtoguess | ... and password |
-    | `HUSARNET_HOSTNAME` | my-esp32 | hostname under which you want your ESP32 to be available by other peers |
     | `HUSARNET_JOINCODE` | fc94:...:932a/xhfqwPxxxetyCExsSPRPn9 | find your own **secret** Join Code at your user account at https://app/husarnet.com > `choosen network` >  `add element` button. Anyone with this Join Code can connect to your Husarnet network |
+    | `HUSARNET_DASHBOARD_LOGIN` | me@acme.com | A login for your account at https://app.husarnet.com (needed by [Husarnet Action](https://github.com/husarnet/husarnet-action/)) |
+    | `HUSARNET_DASHBOARD_PASSWORD` | hardtoguess | A password for your account at https://app.husarnet.com (needed by [Husarnet Action](https://github.com/husarnet/husarnet-action/)) |    
 
 2. Push changes to your repo:
 
@@ -80,6 +100,8 @@ A boilerplate project for ESP32 allowing in-field firmware update using GitHub A
 
     ```bash
     pio run --target erase
+    # or 
+    # esptool.py erase_flash
     ```
 
 4. Upload the firmware:
