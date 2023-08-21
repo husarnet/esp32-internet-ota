@@ -47,15 +47,21 @@ def on_upload(source, target, env):
 
         monitor = MultipartEncoderMonitor(encoder, lambda monitor: bar.update(monitor.bytes_read - bar.n))
 
-        response = requests.post(upload_url, data=monitor, headers={'Content-Type': monitor.content_type})
-        bar.close()
+        try:
+            response = requests.post(upload_url, data=monitor, headers={'Content-Type': monitor.content_type}, timeout=180)
+            bar.close()
         
-        # Basic error checking
-        if response.status_code != 200 or 'error' in response.text.lower(): # This assumes that the response contains the word "error" in case of failures
-            raise Exception(f"Upload failed with status {response.status_code}: {response.text}")
-        else:
-            print("Upload completed successfully!")
-            print(response.text)
+            # Basic error checking
+            if response.status_code != 200 or 'error' in response.text.lower(): 
+                raise Exception(f"Upload failed with status {response.status_code}: {response.text}")
+            else:
+                print("Upload completed successfully!")
+                print(response.text)
+        except requests.Timeout:
+            print("Request timed out!")
+        except requests.RequestException as e:
+            print(f"Error occurred: {e}")
+
 
             
 env.Replace(UPLOADCMD=on_upload)
