@@ -49,6 +49,13 @@ def on_upload(source, target, env):
 
         response = requests.post(upload_url, data=monitor, headers={'Content-Type': monitor.content_type})
         bar.close()
-        print(response,response.text)
+        
+        # Basic error checking
+        if response.status_code != 200 or 'error' in response.text.lower(): # This assumes that the response contains the word "error" in case of failures
+            raise Exception(f"Upload failed with status {response.status_code}: {response.text}")
+        else:
+            print("Upload completed successfully!")
+            print(response.text)
+
             
 env.Replace(UPLOADCMD=on_upload)
