@@ -42,9 +42,9 @@ A boilerplate project for ESP32 allowing in-field firmware update using GitHub A
     And edit its content:
 
     ```bash
-    WIFI_SSID="<place-your-wifi-ssid-here>"
-    WIFI_PASS="<place-a-password-to-your-wifi-here>"
-    HUSARNET_JOINCODE="<place-your-husarnet-joincode-here"
+    export WIFI_SSID="<place-your-wifi-ssid-here>"
+    export WIFI_PASS="<place-a-password-to-your-wifi-here>"
+    export HUSARNET_JOINCODE="<place-your-husarnet-joincode-here"
     ```
 
 3. The first time you need to upload the firmware over the USB cable:
