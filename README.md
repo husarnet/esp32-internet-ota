@@ -47,6 +47,19 @@ A boilerplate project for ESP32 allowing in-field firmware update using GitHub A
     export HUSARNET_JOINCODE="<place-your-husarnet-joincode-here"
     ```
 
+    
+> **Tip** 
+>
+> If your SSID or WLAN Password contains special characters (ex. ```$ & ( ) ? ; : , . < > | ` ```) you need to escape them like this::
+>
+> If WiFi password is ```$&()?``` then:
+> ```bash
+> export WIFI_PASS="\$\&\(\)\?"
+> ```
+> Some special characters (ex. ```' " \ ```) can't be escaped.
+> We recommend to not use special characters and emojis in WiFi SSID/Password.
+>
+
 3. The first time you need to upload the firmware over the USB cable:
 
     ```bash
@@ -145,3 +158,4 @@ sudo tcpflow -p -c -i hnet0
 Here is a blog post showing how to configure Nginx Proxy Manager to **provide a public access to web servers hosted by Husarnet connected devices**: https://husarnet.com/blog/reverse-proxy-gui
 
 It can be also used  o provide the access to a web server hosted by ESP32 using a nice looking link like: `https://my-awesome-esp32.mydomain.com`.
+
